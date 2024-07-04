@@ -1,0 +1,12 @@
+{
+    "components": [
+        {
+            "path": "/Mobili/bazel-bin/components/drivers/gps_component_main",
+            "flags": []
+        },
+        {
+            "path": "/Mobili/bazel-bin/components/drivers/imu_component_main",
+            "flags": []
+        }
+    ]
+}

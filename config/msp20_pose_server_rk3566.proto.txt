@@ -1,0 +1,36 @@
+component_info {
+    node_name: "pose_server"
+}
+
+chassis_channel {
+  channel_name: ""
+}
+
+gnss_odom_channel {
+  channel_name: ""
+}
+
+gnss_gps_channel {
+  channel_name: "/mobili/star_river/gps"
+}
+
+imu_channel {
+  channel_name: "/mobili/wit_mition/imu"
+}
+
+server_id: "pose_server"
+
+odom_extrinsic_file: ""
+imu_extrinsic_file: ""
+
+max_time_span: 5000000000
+
+algorithm: IMU_BASED_FUSION
+
+pose_service_port: 40010
+
+terrain_height: 1.75
+
+result_channel_name: "/mobili/ins/odom"
+
+pose_origin_channel_name: "/mobili/pose_origin"
