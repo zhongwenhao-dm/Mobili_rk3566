@@ -13,10 +13,11 @@ fi
 
 # 启动imu_component和gps_component
 echo "Start imu_component and gps_component!"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exec bash"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exec bash"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exit"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exit"
 # 等待10s让串口都链接上
-sleep 10
+echo "wait 12 seconds for imu and gps components....."
+sleep 12
 
 
 # 捕获ctrl+c，终止数据录制

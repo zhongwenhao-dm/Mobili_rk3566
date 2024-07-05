@@ -23,9 +23,10 @@ trap cleanup INT
 
 # 启动imu_component和gps_component
 echo "Start imu_component and gps_component!"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exec bash"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exec bash"
-sleep 10
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exit"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exit"
+echo "wait 12 seconds for imu and gps components....."
+sleep 12
 
 # 启动pose_server_component
 CONFIG_FILE=msp20_pose_server_rk3566.proto.txt
