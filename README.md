@@ -23,7 +23,8 @@ bash ./start_service.sh
 
 ## 监控消息channel
 monitor只能在arm架构上使用
+进入容器内执行如下命令
 
 ```
-
+./external/dm_wurmloch/tools/wurmloch_monitor/wurmloch_monitor
 ```
