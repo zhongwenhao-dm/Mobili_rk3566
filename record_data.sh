@@ -11,16 +11,6 @@ else
     bash ./create_container.sh $CONTAINER_NAME
 fi
 
-
-# 启动imu_component和gps_component
-echo "Start imu_component and gps_component!"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exit"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exit"
-# 等待10s让串口都链接上
-echo "wait 12 seconds for imu and gps components....."
-sleep 12
-
-
 # 捕获ctrl+c，终止数据录制
 cleanup() {
     echo "Caught interrupt signal! Terminating process..."
@@ -31,6 +21,15 @@ cleanup() {
     exit 0
 }
 trap cleanup INT
+
+
+# 启动imu_component和gps_component
+echo "Start imu_component and gps_component!"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exit"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exit"
+# 等待10s让串口都链接上
+echo "wait 12 seconds for imu and gps components....."
+sleep 12
 
 
 # 录制数据
