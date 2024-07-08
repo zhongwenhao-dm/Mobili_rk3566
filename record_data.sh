@@ -4,7 +4,8 @@
 CONTAINER_NAME=test1
 echo "Target container's name is '$CONTAINER_NAME'!"
 if sudo docker inspect "$CONTAINER_NAME" > /dev/null 2>&1; then
-    echo "Container '$CONTAINER_NAME' exists!"
+    echo "Container '$CONTAINER_NAME' exists! Start it!"
+    sudo docker start $CONTAINER_NAME
 else
     echo "Container '$CONTAINER_NAME' does not exist, create it!"
     bash ./create_container.sh $CONTAINER_NAME

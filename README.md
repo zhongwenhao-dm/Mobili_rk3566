@@ -30,3 +30,10 @@ monitor只能在arm架构上使用
 ```
 ./external/dm_wurmloch/tools/wurmloch_monitor/wurmloch_monitor
 ```
+
+
+## 数据分析工具
+稍微分析一下采集到的imu和gps的数据，看看有没有基本的异常
+```
+
+```
