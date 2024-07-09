@@ -33,7 +33,7 @@ services:
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
-      - ~/Data:/work/record
+      - /home/cat/Data:/work/record
       
 
 
