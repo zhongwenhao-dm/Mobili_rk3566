@@ -33,6 +33,6 @@ services:
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
-      - /Data:/work/record
+      - ~/Data:/work/record
 
 
