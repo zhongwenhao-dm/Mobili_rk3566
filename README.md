@@ -47,7 +47,5 @@ monitor只能在arm架构上使用
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# 启动
-cd docker_compose
-docker-compose up
-```
+# rk3566中启动
+bash rk3566_scripts/start.sh

@@ -9,6 +9,7 @@ services:
       - ALL
     volumes:
       - /dev:/dev
+      - /etc/localtime:/etc/localtime
     
 
   imu:
@@ -19,6 +20,7 @@ services:
       - ALL
     volumes:
       - /dev:/dev
+      - /etc/localtime:/etc/localtime
 
 
   record:
@@ -28,6 +30,9 @@ services:
     image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240702-d87fa
     privileged: true
     entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a"
-    
+    volumes:
+      - /dev:/dev
+      - /etc/localtime:/etc/localtime
+      - /Data:/work/record
 
 
