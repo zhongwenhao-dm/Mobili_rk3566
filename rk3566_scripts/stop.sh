@@ -5,7 +5,7 @@
 PARENT_DIR=/home/cat/Data
 YML_FILE=~/work/Mobili_rk3566/docker_compose/docker-compose-arm.yml
 
-TEMP_DIR=$PARENT_DIR/temp
+TEMP_DIR=$PARENT_DIR/../temp
 
 echo "Stop data recording!"
 
