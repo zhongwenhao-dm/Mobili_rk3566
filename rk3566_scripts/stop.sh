@@ -13,7 +13,7 @@ echo "Stop data recording!"
 COMPOSE_PID=$(cat $TEMP_DIR/docker-compose.pid)
 kill $COMPOSE_PID
 
-docker-compose -f $YML_FILE down
+sudo docker-compose -f $YML_FILE down
 
 # 查找最近新增的子文件夹
 OUTPUT_DIR_NAME=$(cat $TEMP_DIR/output-dir.name)

@@ -13,7 +13,7 @@ OUTPUT_DIR_NAME=$1
 
 
 # 启动compose， 输出到日志文件
-docker-compose -f $YML_FILE up > $TEMP_DIR/docker-compose.log 2>&1 &
+sudo docker-compose -f $YML_FILE up > $TEMP_DIR/docker-compose.log 2>&1 &
 
 COMPOSE_PID=$!
 echo $COMPOSE_PID > $TEMP_DIR/docker-compose.pid
