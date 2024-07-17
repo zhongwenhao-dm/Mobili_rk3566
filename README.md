@@ -35,7 +35,8 @@ monitor只能在arm架构上使用
 ## 数据分析工具
 稍微分析一下采集到的imu和gps的数据，看看有没有基本的异常
 ```
-
+# 包括时序分析、频域分析、完整性分析、统计分析、二阶导可视化
+python python_scripts/data_analyze.py -type [imu/gps] -csv_path <csv_file_path>
 ```
 
 
@@ -47,5 +48,7 @@ monitor只能在arm架构上使用
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# rk3566中启动
+# rk3566中启动、停止、监控
 bash rk3566_scripts/start.sh
+bash rk3566_scripts/stop.sh
+bash rk3566_scripts/monitor.sh
