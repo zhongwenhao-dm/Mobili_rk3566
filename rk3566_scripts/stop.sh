@@ -11,7 +11,7 @@ echo "Stop data recording!"
 
 # 读取进程id，杀死进程
 COMPOSE_PID=$(cat $TEMP_DIR/docker-compose.pid)
-kill $COMPOSE_PID
+sudo kill $COMPOSE_PID
 
 sudo docker-compose -f $YML_FILE down
 
@@ -29,7 +29,7 @@ mv "$TEMP_DIR/docker-compose.log" "$LATEST_DIR/docker-compose.log"
 # 找到log中的GPS_TIME
 # I20240717 14:18:39.930855 1346944 serial_port_gps.cc:133] GPS time = 20240705203456
 LOG_FILE=$LATEST_DIR/docker-compose.log
-GPS_TIME=$(grep "GPS time =" "$LOG_FILE" | awk -F'=' '{print $2}' | awk '{$1=$1;print}')
+GPS_TIME=$(grep -m 1 "GPS time =" "$LOG_FILE" | awk -F'=' '{print $2}' | awk '{$1=$1;print}')
 # 如果找到了GPS_TIME，将其作为文件夹的名称
 if [ -n "${GPS_TIME}" ]; then
     mv "$LATEST_DIR" "$PARENT_DIR/$GPS_TIME"
