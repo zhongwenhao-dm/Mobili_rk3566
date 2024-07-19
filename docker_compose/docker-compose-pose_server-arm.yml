@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-24088
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
     command: ./components/drivers/gps_component_main
     privileged: true
     cap_add:
@@ -13,7 +13,7 @@ services:
     
 
   imu:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-24088
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
     command: ./components/drivers/imu_component_main
     privileged: true
     cap_add:
@@ -23,16 +23,17 @@ services:
       - /etc/localtime:/etc/localtime
 
 
-  record:
+  pose_server:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-24088
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
     privileged: true
-    entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a"
+    entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566.proto.txt -stop_stablize true"
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
-      - /home/dmgz/Data:/work/record
+      - /home/cat/Data:/work/record
+      
 
 
