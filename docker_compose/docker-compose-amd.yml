@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240717-fb601
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-b5d9d
     command: ./components/drivers/gps_component_main
     privileged: true
     cap_add:
@@ -13,7 +13,7 @@ services:
     
 
   imu:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240717-fb601
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-b5d9d
     command: ./components/drivers/imu_component_main
     privileged: true
     cap_add:
@@ -27,7 +27,7 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240717-fb601
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-b5d9d
     privileged: true
     entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a"
     volumes:
