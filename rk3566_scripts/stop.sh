@@ -10,8 +10,8 @@ TEMP_DIR=$PARENT_DIR/../temp
 echo "Stop data recording!"
 
 # 读取进程id，杀死进程
-COMPOSE_PID=$(cat $TEMP_DIR/docker-compose.pid)
-sudo kill $COMPOSE_PID
+# COMPOSE_PID=$(cat $TEMP_DIR/docker-compose.pid)
+# kill $COMPOSE_PID
 
 sudo docker-compose -f $YML_FILE down
 
