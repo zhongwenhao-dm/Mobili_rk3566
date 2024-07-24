@@ -12,12 +12,12 @@ mkdir $TEMP_DIR
 OUTPUT_DIR_NAME=$1
 
 # 启动compose， 输出到日志文件
-echo "start imu and gps component...."
-sudo docker-compose -f $YML_FILE up -d gps imu
-sleep 4
-echo "start record component...."
-sudo docker-compose -f $YML_FILE up -d record 
-# > $TEMP_DIR/docker-compose.log 2>&1 &
+# echo "start imu and gps component...."
+# sudo docker-compose -f $YML_FILE up -d gps imu
+# sleep 4
+# echo "start record component...."
+# sudo docker-compose -f $YML_FILE up -d record > $TEMP_DIR/docker-compose.log 2>&1 &
+sudo docker-compose -f $YML_FILE up > $TEMP_DIR/docker-compose.log 2>&1 &
 sleep 4
 
 # 保存record容器id
