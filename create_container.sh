@@ -7,12 +7,12 @@ arch=$(uname -m)
 if [ "$arch" == "x86_64" ]; then
     echo "The system is based on x86-64 (AMD64) architecture."
     # AMD64系统
-    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240702-d87fa
+    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240719-24088
 
 elif [ "$arch" == "aarch64" ] || [ "$arch" == "arm64" ]; then
     echo "The system is based on ARM64 architecture."
     # ARM64系统
-    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240702-d87fa
+    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
 
 elif [ "$arch" == "armv7l" ] || [ "$arch" == "armv6l" ]; then
     echo "The system is based on 32-bit ARM architecture."
@@ -38,6 +38,7 @@ sudo docker run -it -d --name $NAME \
     -v /mnt:/mnt \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v /usr/src:/usr/src \
+    -v /home/cat/Data:/work/record \
     $IMG \
     /bin/bash
 

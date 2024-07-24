@@ -34,7 +34,7 @@ sleep 12
 
 # 录制数据
 RECORD_DIR=./record/
-sudo docker exec $CONTAINER_NAME bash -c "./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output $RECORD_DIR -a"
+sudo docker exec -it $CONTAINER_NAME bash -c "./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output $RECORD_DIR -a"
 
 
 
