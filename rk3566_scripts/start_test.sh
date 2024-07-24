@@ -16,7 +16,8 @@ echo "start imu and gps component...."
 sudo docker-compose -f $YML_FILE up -d gps imu
 sleep 4
 echo "start record component...."
-sudo docker-compose -f $YML_FILE up -d record > $TEMP_DIR/docker-compose.log 2>&1 &
+sudo docker-compose -f $YML_FILE up -d record 
+# > $TEMP_DIR/docker-compose.log 2>&1 &
 sleep 4
 
 # 保存record容器id
