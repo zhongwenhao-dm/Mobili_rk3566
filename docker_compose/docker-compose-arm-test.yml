@@ -28,6 +28,7 @@ services:
       - gps
       - imu
     image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
+    command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
     stdin_open: true
     tty: true
     privileged: true

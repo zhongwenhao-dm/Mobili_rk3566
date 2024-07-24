@@ -19,7 +19,7 @@ echo "start record component...."
 sudo docker-compose -f $YML_FILE up -d record > $TEMP_DIR/docker-compose.log 2>&1 &
 
 # 保存record容器id
-RECORDER_CONTAINER_ID=$(docker-compose ps -q recorder)
+RECORDER_CONTAINER_ID=$(docker-compose -f $YML_FILE ps -q record)
 echo $RECORDER_CONTAINER_ID > $TEMP_DIR/recorder_container.id
 
 
