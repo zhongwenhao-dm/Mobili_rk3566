@@ -20,7 +20,7 @@ if [ -f $TEMP_DIR/recorder_container.id ]; then
     RECORDER_CONTAINER_ID=$(cat $TEMP_DIR/recorder_container.id)
     # 发送 SIGINT 信号到 recorder 容器内的进程
     PID_RECORD=$(sudo docker exec $CONTAINER_NAME pgrep -f wurmloch_recorder)
-    docker exec $RECORDER_CONTAINER_ID kill -SIGINT $PID_RECORD
+    sudo docker exec $RECORDER_CONTAINER_ID kill -SIGINT $PID_RECORD
     sleep 5
 fi
 
