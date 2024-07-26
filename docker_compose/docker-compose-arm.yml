@@ -28,8 +28,10 @@ services:
       - gps
       - imu
     image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
+    command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
+    stdin_open: true
+    tty: true
     privileged: true
-    entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a"
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime

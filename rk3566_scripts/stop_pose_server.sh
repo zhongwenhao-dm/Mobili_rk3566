@@ -13,6 +13,17 @@ echo "Stop data recording!"
 # COMPOSE_PID=$(cat $TEMP_DIR/docker-compose.pid)
 # kill $COMPOSE_PID
 
+# 找到recorder_container id，终止recorder
+if [ -f $TEMP_DIR/recorder_container.id ]; then
+    echo "find recorder container, send SIGINT to the process....."
+    # 读取容器 ID
+    RECORDER_CONTAINER_ID=$(cat $TEMP_DIR/recorder_container.id)
+    # 发送 SIGINT 信号到 recorder 容器内的进程
+    PID_RECORD=$(sudo docker exec $RECORDER_CONTAINER_ID pgrep -f wurmloch_recorder)
+    sudo docker exec $RECORDER_CONTAINER_ID kill -SIGINT $PID_RECORD
+    sleep 5
+fi
+
 sudo docker-compose -f $YML_FILE down
 
 # 查找最近新增的子文件夹
