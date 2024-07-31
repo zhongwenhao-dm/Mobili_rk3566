@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240731-4fea5
     command: ./components/drivers/gps_component_main
     privileged: true
     cap_add:
@@ -10,10 +10,9 @@ services:
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
-    
 
   imu:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240731-4fea5
     command: ./components/drivers/imu_component_main
     privileged: true
     cap_add:
@@ -22,12 +21,11 @@ services:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
 
-
   record:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240719-24088
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240731-4fea5
     command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
     stdin_open: true
     tty: true
@@ -36,6 +34,3 @@ services:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
       - /home/cat/Data:/work/record
-      
-
-

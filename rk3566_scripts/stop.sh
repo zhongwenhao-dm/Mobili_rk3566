@@ -9,10 +9,6 @@ TEMP_DIR=$PARENT_DIR/../temp
 
 echo "Stop data recording!"
 
-# 读取进程id，杀死进程
-# COMPOSE_PID=$(cat $TEMP_DIR/docker-compose.pid)
-# kill $COMPOSE_PID
-
 # 找到recorder_container id，终止recorder
 if [ -f $TEMP_DIR/recorder_container.id ]; then
     echo "find recorder container, send SIGINT to the process....."
