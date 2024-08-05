@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240802-605a4
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240805-e03f1
     command: ./components/drivers/gps_component_main
     privileged: true
     cap_add:
@@ -12,7 +12,7 @@ services:
       - /etc/localtime:/etc/localtime
 
   imu:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240802-605a4
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240805-e03f1
     command: ./components/drivers/imu_component_main
     privileged: true
     cap_add:
@@ -25,10 +25,11 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240802-605a4
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240805-e03f1
     # network_mode: "host"  用来共享所有端口，不确定有没有用
     ports:
       - "40010:40010"
+      - "15214:15214"
     privileged: true
     entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566.proto.txt -stop_stablize true"
     volumes:
@@ -40,7 +41,7 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240802-605a4
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240805-e03f1
     command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
     stdin_open: true
     tty: true
