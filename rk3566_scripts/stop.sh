@@ -28,7 +28,8 @@ sudo docker-compose -f $YML_FILE down
 
 # 查找最近新增的子文件夹
 OUTPUT_DIR_NAME=$(cat $TEMP_DIR/output-dir.name)
-LATEST_DIR=$(find "$PARENT_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -1 | cut -d' ' -f2-)
+# LATEST_DIR=$(find "$PARENT_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -1 | cut -d' ' -f2-)
+LATEST_DIR=$(cat $TEMP_DIR/session_name.txt)
 # 检查是否找到子文件夹
 if [ -z "$LATEST_DIR" ]; then
     echo "没有找到新增的子文件夹。"
