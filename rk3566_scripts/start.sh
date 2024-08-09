@@ -18,7 +18,7 @@ sleep 4
 # 保存record容器id，以及原始的session_name
 RECORDER_CONTAINER_ID=$(sudo docker-compose -f $YML_FILE ps -q record)
 echo $RECORDER_CONTAINER_ID > $TEMP_DIR/recorder_container.id
-SESSION_NAME=$(grep -m 1 "Write to session:" "$TEMP_DIR/docker-compose.log" | sed -n 's/.*write to session: \([0-9]*\).*/\1/p')
+SESSION_NAME=$(grep -m 1 "Write to session:" "$TEMP_DIR/docker-compose.log" | sed -n 's/.*Write to session: \([0-9]*\).*/\1/p')
 echo $SESSION_NAME > $TEMP_DIR/session_name.txt
 
 
