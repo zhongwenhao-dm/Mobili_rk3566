@@ -1,0 +1,178 @@
+test_grpc.sh
+
+#!/usr/bin/env bash
+
+# 192.168.16.210:40010
+# 10.42.0.1:40010
+CAR_POSE_URL="192.168.10.88:40010"
+
+# 命令行输入用户数量，默认20个用户
+CLIENT_NUM=${1:-20}
+
+TEMP_DIR=/LidarMapping/scripts/temp
+mkdir $TEMP_DIR
+
+# 模拟多个client连接，并将输出保存在log，用来查看系统接收时间间隔和pose的时间间隔
+for i in $(seq 1 $CLIENT_NUM)
+do
+    bazel run -c opt //world_generation:grpc_test_main -- -car_pose_url=$CAR_POSE_URL -stop_time=1500 -thread_num=1 > "$TEMP_DIR/client_$i.log" 2>&1 &
+    echo "Started client $i, output is being saved to client_$i.log"
+done
+
+
+wait
+echo "All clients have finished."
+
+---------------------------------------------------------------------------
+test_grpc_main.cc
+
+
+// Copyright 2024 DeepMirror Inc. All rights reserved.
+
+#include <grpc++/grpc++.h>
+#include "common/base/glog.h"
+#include "proto/internal/dataservice/pose_manager_service.grpc.pb.h"
+#include "proto/internal/dataservice/pose_manager_service.pb.h"
+#include "world_generation/application/application.h"
+
+DEFINE_string(car_pose_url, "0.0.0.0:40010", "session name.");
+DEFINE_int32(thread_num, 1, "thread_num");
+DEFINE_int32(stop_time, 20, "thread_num");
+
+bool quit_ = false;
+
+void ReceivingCarPoseGrpc(int user_id);
+
+int main(int argc, char** argv) {
+  DM_InitGoogleLogging(argc, argv);
+
+  // create a server for car pose grpc
+  std::vector<std::thread> user_threads;
+  for (int i = 0; i < FLAGS_thread_num; i++) {
+    user_threads.emplace_back(ReceivingCarPoseGrpc, i);
+  }
+
+  int n = 0;
+  while (true) {
+    LOG_EVERY_N(INFO, 10) << "running ........";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    n++;
+    if (n > FLAGS_stop_time) {
+        LOG(INFO) << "Time to stop! Running " << FLAGS_stop_time << " seconds.";
+        break;
+    }
+  }
+
+  quit_ = true;
+  for (auto& thread : user_threads) {
+    if (thread.joinable()) {
+        thread.join();
+    }
+  }
+  LOG(INFO) << "Finished.";
+  return 0;
+}
+
+void ReceivingCarPoseGrpc(int user_id) {
+  std::shared_ptr<grpc::ClientContext> context;
+  std::unique_ptr<grpc::ClientReader<dm::internal::proto::dataservice::PosePair>> reader;
+
+  int reconnect_cnt = 0;
+  int max_reconnect_cnt = 5;
+  auto reconnect = [&]() {
+    reconnect_cnt++;
+    auto channel = grpc::CreateChannel(FLAGS_car_pose_url, grpc::InsecureChannelCredentials());
+    CHECK(channel) << "Pose gRpc client not set channel.";
+    auto pose_stub = dm::internal::proto::dataservice::PoseManagerService::NewStub(channel);
+    CHECK(pose_stub) << "Pose gRpc client not set stub.";
+    context = std::make_shared<grpc::ClientContext>();
+    reader = pose_stub->GetPoseStream(context.get(), dm::internal::proto::dataservice::PosePair());
+    if (!reader) {
+      LOG(ERROR) << "User " << user_id << ": Car Pose gRpc connection failed.";
+      usleep(1e3);
+    }
+  };
+  reconnect();
+
+  double pose_start_time = 0.0, system_start_time = 0.0;
+
+  // Get car pose streaming
+  dm::internal::proto::dataservice::PosePair current_pose;
+  while (!quit_) {
+    if (reader == nullptr || !reader->Read(&current_pose)) {
+      LOG(ERROR) << "User " << user_id << ": CarPose failed!!! try reconnect.";
+      if (reconnect_cnt < max_reconnect_cnt) {
+        reconnect();
+        continue;
+      } else {
+        break;
+      }
+    }
+    // 获得proto消息的字节数
+    // size_t byte_size = current_pose.ByteSizeLong();
+    // LOG(INFO) << "User " << user_id << ": Received PosePair message of size " << byte_size << " bytes.";
+
+    auto pose_timestamp = current_pose.timestamp() * 1e-9;  // 转换为秒
+    auto system_time = std::chrono::system_clock::now();
+    auto system_timestamp_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                   system_time.time_since_epoch()).count();
+    double system_timestamp = system_timestamp_ms / 1000.0;
+
+    if (pose_start_time == 0) pose_start_time = pose_timestamp;
+    if (system_start_time == 0) system_start_time = system_timestamp;
+    pose_timestamp -= pose_start_time;
+    system_timestamp -= system_start_time;
+
+    Eigen::Vector3d translation = dm::math::ToEigen(current_pose.pose().translation());
+    LOG(INFO) << "User " << user_id << "---------------------------------";
+    LOG(INFO) << "User " << user_id
+              << ": pose_timestamps() : " << pose_timestamp
+              << " system_timestamp: " << system_timestamp;
+
+
+    // 记录时间间隔
+    static double last_pose_timestamp = 0;
+    if (last_pose_timestamp != 0) {
+      double pose_interval = pose_timestamp - last_pose_timestamp;
+      LOG(INFO) << "User " << user_id << ": Pose interval: " << pose_interval << " seconds";
+    }
+    last_pose_timestamp = pose_timestamp;
+
+    static double last_system_timestamp = 0;
+    if (last_system_timestamp != 0) {
+      double system_interval = system_timestamp - last_system_timestamp;
+      LOG(INFO) << "User " << user_id << ": System interval: " << system_interval << " seconds";
+    }
+    last_system_timestamp = system_timestamp;
+  }
+}
+
+
+
+
+------------------------------------------------------
+BUILD
+
+
+
+
+cc_binary(
+    name = "grpc_test_main",
+    srcs = [
+        "grpc_test_main.cc",
+    ],
+    deps = [
+        "//world_generation/application:application",
+        "@dm_core_cpp//common/base:glog",
+        "@dm_core_cpp//common/string:string_utils",
+        "@dm_core_map//map/utils:viewer",
+        "@dm_core_apis//proto/internal/dataservice:pose_manager_service_cc_grpc",
+        "@dm_core_apis//proto/internal/dataservice:pose_manager_service_cc_proto",
+        "@dm_core_cpp//common/grpc:client",
+    ],
+)
+
+
+
+
+

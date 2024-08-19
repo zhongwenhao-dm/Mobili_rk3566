@@ -7,12 +7,12 @@ arch=$(uname -m)
 if [ "$arch" == "x86_64" ]; then
     echo "The system is based on x86-64 (AMD64) architecture."
     # AMD64系统
-    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240815-a9106
+    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240819-ff5bf
 
 elif [ "$arch" == "aarch64" ] || [ "$arch" == "arm64" ]; then
     echo "The system is based on ARM64 architecture."
     # ARM64系统
-    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240815-a9106
+    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240819-ff5bf
 
 elif [ "$arch" == "armv7l" ] || [ "$arch" == "armv6l" ]; then
     echo "The system is based on 32-bit ARM architecture."
