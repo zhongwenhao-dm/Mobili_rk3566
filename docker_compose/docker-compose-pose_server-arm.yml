@@ -3,7 +3,7 @@ services:
 
   gps:
     image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240909-d4cf8
-    command: ./components/drivers/rtk_component_main
+    command: ./components/drivers/gps_component_main
     privileged: true
     cap_add:
       - ALL
