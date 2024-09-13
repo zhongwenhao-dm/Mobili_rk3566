@@ -25,8 +25,8 @@ trap cleanup INT
 
 # 启动imu_component和gps_component
 echo "Start imu_component and gps_component!"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main"; exit"
-gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main"; exit"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/imu_component_main --config_file ./launch/xavier_local/rk3566_drivers_imu.proto.txt"; exit"
+gnome-terminal -- bash -c "sudo docker exec $CONTAINER_NAME bash -c "./components/drivers/gps_component_main --config_file ./launch/xavier_local/rk3566_drivers_gps.proto.txt"; exit"
 # 等待10s让串口都链接上
 echo "wait 12 seconds for imu and gps components....."
 sleep 12
