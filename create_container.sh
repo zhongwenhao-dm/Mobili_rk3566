@@ -6,13 +6,13 @@ arch=$(uname -m)
 # 根据不同的架构拉取不同的镜像
 if [ "$arch" == "x86_64" ]; then
     echo "The system is based on x86-64 (AMD64) architecture."
-    # AMD64系统 20240910-59c73
-    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240912-b994e
+    # AMD64系统
+    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240912-7181a
 
 elif [ "$arch" == "aarch64" ] || [ "$arch" == "arm64" ]; then
     echo "The system is based on ARM64 architecture."
     # ARM64系统
-    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240912-b994e
+    IMG=aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240912-7181a
 
 elif [ "$arch" == "armv7l" ] || [ "$arch" == "armv6l" ]; then
     echo "The system is based on 32-bit ARM architecture."

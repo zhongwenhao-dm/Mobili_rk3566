@@ -36,7 +36,7 @@ monitor只能在arm架构上使用
 稍微分析一下采集到的imu和gps的数据，看看有没有基本的异常
 ```
 # 包括时序分析、频域分析、完整性分析、统计分析、二阶导可视化
-python python_scripts/data_analyze.py -type [imu/gps] -csv_path <csv_file_path>
+python tools/data_analyze.py -type [imu/gps] -csv_path <csv_file_path>
 ```
 
 
