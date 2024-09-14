@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240913-b89e0
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240914-5a2f2
     command: ./components/drivers/rtk_component_main --config_file ./launch/xavier_local/rk3566_drivers_rtk.proto.txt
     privileged: true
     cap_add:
@@ -12,7 +12,7 @@ services:
       - /etc/localtime:/etc/localtime
 
   imu:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240913-b89e0
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240914-5a2f2
     command: ./components/drivers/imu_component_main --config_file ./launch/xavier_local/rk3566_drivers_imu.proto.txt
     privileged: true
     cap_add:
@@ -25,9 +25,9 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240913-b89e0
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240914-5a2f2
     privileged: true
-    entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566.proto.txt -stop_stablize true"
+    entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566_boat.proto.txt -stop_stablize true"
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime
@@ -38,7 +38,7 @@ services:
       - gps
       - imu
       - pose_server
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240913-b89e0
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app-amd64:presubmit-20240914-5a2f2
     privileged: true
     entrypoint: /bin/bash -c "echo 'wait 8s for gps、imu and pose_server'; sleep 8; ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a"
     volumes:
