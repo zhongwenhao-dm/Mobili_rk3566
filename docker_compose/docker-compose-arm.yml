@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
+    image: 431983620723.dkr.ecr.ap-east-1.amazonaws.com/dm/mobili-app:presubmit-20240919-f398b
     command: ./components/drivers/gps_component_main --config_file ./launch/xavier_local/rk3566_drivers_gps.proto.txt
     privileged: true
     cap_add:
@@ -12,7 +12,7 @@ services:
       - /etc/localtime:/etc/localtime
 
   imu:
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
+    image: 431983620723.dkr.ecr.ap-east-1.amazonaws.com/dm/mobili-app:presubmit-20240919-f398b
     command: ./components/drivers/imu_component_main --config_file ./launch/xavier_local/rk3566_drivers_imu.proto.txt
     privileged: true
     cap_add:
@@ -25,7 +25,7 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
+    image: 431983620723.dkr.ecr.ap-east-1.amazonaws.com/dm/mobili-app:presubmit-20240919-f398b
     command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
     stdin_open: true
     tty: true
