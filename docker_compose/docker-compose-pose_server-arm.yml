@@ -3,7 +3,7 @@ services:
 
   gps:
     #aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20240919-f398b
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
     command: ./components/drivers/rtk_component_main --config_file ./launch/xavier_local/rk3566_drivers_rtk.proto.txt
     privileged: true
     cap_add:
@@ -13,7 +13,7 @@ services:
       - /etc/localtime:/etc/localtime
 
   imu:
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20240919-f398b
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
     command: ./components/drivers/imu_component_main --config_file ./launch/xavier_local/rk3566_drivers_imu.proto.txt
     privileged: true
     cap_add:
@@ -26,7 +26,7 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20240919-f398b
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
     # network_mode: "host"  用来共享所有端口，不确定有没有用
     ports:
       - "40010:40010"
@@ -42,7 +42,7 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20240919-f398b
+    image: aliyunregistry.deepmirror.com.cn/dm/mobili-app:presubmit-20240919-f398b
     command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
     stdin_open: true
     tty: true
