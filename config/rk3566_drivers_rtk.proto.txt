@@ -1,0 +1,8 @@
+component_info {
+    node_name: "rtk_component"
+}
+write_channel {
+    channel_name: "/mobili/star_river/gps"
+}
+
+port_pattern: "/dev/ttyACM*"

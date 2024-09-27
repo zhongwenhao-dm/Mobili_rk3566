@@ -3,22 +3,24 @@ services:
 
   gps:
     image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20240927-4281d
-    command: ./components/drivers/rtk_component_main --config_file ./launch/xavier_local/rk3566_drivers_rtk.proto.txt
+    command: ./components/drivers/rtk_component_main --config_file ./config/rk3566_drivers_rtk.proto.txt
     privileged: true
     cap_add:
       - ALL
     volumes:
       - /dev:/dev
+      - /home/cat/work/Mobili_rk3566/config:/work/config
       - /etc/localtime:/etc/localtime
 
   imu:
     image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20240927-4281d
-    command: ./components/drivers/imu_component_main --config_file ./launch/xavier_local/rk3566_drivers_imu.proto.txt
+    command: ./components/drivers/imu_component_main --config_file ./config/rk3566_drivers_imu.proto.txt
     privileged: true
     cap_add:
       - ALL
     volumes:
       - /dev:/dev
+      - /home/cat/work/Mobili_rk3566/config:/work/config
       - /etc/localtime:/etc/localtime
 
   pose_server:

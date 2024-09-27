@@ -1,0 +1,9 @@
+component_info {
+    node_name: "imu_component"
+}
+
+write_channel {
+    channel_name: "/mobili/wit_mition/imu"
+}
+
+port_pattern: "/dev/ttyS3"
