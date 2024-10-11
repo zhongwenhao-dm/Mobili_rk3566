@@ -1,27 +1,27 @@
 version: '3'
 services:
 
-  gps:
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
-    command: ./components/drivers/rtk_component_main --config_file ./config/rk3566_drivers_rtk.proto.txt
-    privileged: true
-    cap_add:
-      - ALL
-    volumes:
-      - /dev:/dev
-      - /home/cat/work/Mobili_rk3566/config:/work/config
-      - /etc/localtime:/etc/localtime
+  # gps:
+  #   image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
+  #   command: ./components/drivers/rtk_component_main --config_file ./config/rk3566_drivers_rtk.proto.txt
+  #   privileged: true
+  #   cap_add:
+  #     - ALL
+  #   volumes:
+  #     - /dev:/dev
+  #     - /home/cat/work/Mobili_rk3566/config:/work/config
+  #     - /etc/localtime:/etc/localtime
 
-  imu:
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
-    command: ./components/drivers/imu_component_main --config_file ./config/rk3566_drivers_imu.proto.txt
-    privileged: true
-    cap_add:
-      - ALL
-    volumes:
-      - /dev:/dev
-      - /home/cat/work/Mobili_rk3566/config:/work/config
-      - /etc/localtime:/etc/localtime
+  # imu:
+  #   image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
+  #   command: ./components/drivers/imu_component_main --config_file ./config/rk3566_drivers_imu.proto.txt
+  #   privileged: true
+  #   cap_add:
+  #     - ALL
+  #   volumes:
+  #     - /dev:/dev
+  #     - /home/cat/work/Mobili_rk3566/config:/work/config
+  #     - /etc/localtime:/etc/localtime
 
   ip_server:
     image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
@@ -37,32 +37,32 @@ services:
       - /home/cat/work/Mobili_rk3566/config:/work/config
       - /etc/localtime:/etc/localtime
 
-  pose_server:
-    depends_on:
-      - gps
-      - imu
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
-    # network_mode: "host"  用来共享所有端口，不确定有没有用
-    ports:
-      - "40010:40010"
-      - "15214:15214"
-    privileged: true
-    entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566_boat.proto.txt -stop_stablize true"
-    volumes:
-      - /dev:/dev
-      - /etc/localtime:/etc/localtime
-      - /home/cat/Data:/work/record
+  # pose_server:
+  #   depends_on:
+  #     - gps
+  #     - imu
+  #   image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
+  #   # network_mode: "host"  用来共享所有端口，不确定有没有用
+  #   ports:
+  #     - "40010:40010"
+  #     - "15214:15214"
+  #   privileged: true
+  #   entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566_boat.proto.txt -stop_stablize true"
+  #   volumes:
+  #     - /dev:/dev
+  #     - /etc/localtime:/etc/localtime
+  #     - /home/cat/Data:/work/record
 
-  record:
-    depends_on:
-      - gps
-      - imu
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
-    command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
-    stdin_open: true
-    tty: true
-    privileged: true
-    volumes:
-      - /dev:/dev
-      - /etc/localtime:/etc/localtime
-      - /home/cat/Data:/work/record
+  # record:
+  #   depends_on:
+  #     - gps
+  #     - imu
+  #   image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app:presubmit-20241011-e1fa0
+  #   command: ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a
+  #   stdin_open: true
+  #   tty: true
+  #   privileged: true
+  #   volumes:
+  #     - /dev:/dev
+  #     - /etc/localtime:/etc/localtime
+  #     - /home/cat/Data:/work/record
