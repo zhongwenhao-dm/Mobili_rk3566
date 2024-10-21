@@ -2,7 +2,7 @@ version: '3'
 services:
 
   gps:
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241018-5efba
+    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241021-c1abb
     command: ./components/drivers/rtk_component_main --config_file ./launch/xavier_local/rk3566_drivers_rtk.proto.txt
     privileged: true
     cap_add:
@@ -12,7 +12,7 @@ services:
       - /etc/localtime:/etc/localtime
 
   imu:
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241018-5efba
+    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241021-c1abb
     command: ./components/drivers/imu_component_main --config_file ./launch/xavier_local/rk3566_drivers_imu.proto.txt
     privileged: true
     cap_add:
@@ -22,7 +22,7 @@ services:
       - /etc/localtime:/etc/localtime
 
   ip_server:
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241018-5efba
+    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241021-c1abb
     command: ./components/middleware/ip_server_main
     privileged: true
     network_mode: "host"
@@ -40,7 +40,7 @@ services:
     depends_on:
       - gps
       - imu
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241018-5efba
+    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241021-c1abb
     privileged: true
     entrypoint: /bin/bash -c "echo 'wait 8s for gps and imu'; sleep 8; ./components/map/pose_server_component_main --config_file ./launch/xavier_local/msp20_pose_server_rk3566_boat.proto.txt -stop_stablize true"
     volumes:
@@ -53,7 +53,7 @@ services:
       - gps
       - imu
       - pose_server
-    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241018-5efba
+    image: aliyunregistry-gz-mobi-registry.cn-guangzhou.cr.aliyuncs.com/dm/mobili-app-amd64:presubmit-20241021-c1abb
     privileged: true
     entrypoint: /bin/bash -c "echo 'wait 8s for gps、imu and pose_server'; sleep 8; ./external/dm_wurmloch/tools/wurmloch_recorder/wurmloch_recorder record --output ./record/ -a"
     volumes:
